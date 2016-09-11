@@ -1,0 +1,75 @@
+<h1>{{title}}</h1>
+
+<p>Token: {{request.token}}</p>
+<p>Request Created: {{request.createdAt}}</p>
+
+<form action="/location/response/{{request.token}}" method="post">
+  <p>Latitude: <span id="uxlatitude"></span></p>
+  <p>Longitude: <span id="uxlongitude"></span></p>
+  <p id="uxmessage"></p>
+
+  <input type="hidden" name="latitude" id="hdlatitude"/>
+  <input type="hidden" name="longitude" id="hdlongitude"/>
+  <input type="submit" id="uxsubmit" disabled />
+</form>
+
+{{#if hasresponse}}
+<a href={{lastresponse.googlemapslink}} target="_blank">
+  <img src="{{lastresponse.googleimg}}"/>
+</a>
+{{/if}}
+
+<h2>Responses</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Latitude</th>
+      <th>Longitude</th>
+      <th>Map</th>
+      <th>Response Created</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each responses}}
+    <tr>
+      <td>{{id}}</td>
+      <td>{{latitude}}</td>
+      <td>{{longitude}}</td>
+      <td><a href="{{googlemapslink}}" target="_blank">map</a></td>
+      <td>{{createdAt}}</td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+
+<script type="text/javascript">
+
+function init() {
+  if  (!("geolocation" in navigator)) {
+    return message('Geolocation is not available');
+  }
+
+  navigator.geolocation.getCurrentPosition(location_success, location_error);
+}
+
+function location_success(position){
+  document.getElementById('uxlatitude').innerText = position.coords.latitude;
+  document.getElementById('hdlatitude').value = position.coords.latitude;
+  document.getElementById('uxlongitude').innerText = position.coords.longitude;
+  document.getElementById('hdlongitude').value = position.coords.longitude;
+  document.getElementById('uxsubmit').disabled = false;
+}
+
+function location_error(err) {
+  console.log(err);
+  message('Error getting location: ' + err);
+}
+
+function message(txt) {
+  var e = document.getElementById('uxmessage');
+  e.innerText = txt;
+}
+
+init();
+</script>
