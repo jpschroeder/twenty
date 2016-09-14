@@ -52,7 +52,13 @@ function init() {
     return message('Geolocation is not available');
   }
 
-  navigator.geolocation.getCurrentPosition(location_success, location_error);
+  //navigator.geolocation.getCurrentPosition(location_success, location_error);
+  var geo_options = {
+    enableHighAccuracy: true
+    //maximumAge        : 30000,
+    //timeout           : 27000
+  };
+  var watchID = navigator.geolocation.watchPosition(location_success, location_error, geo_options);
 }
 
 function location_success(position){
