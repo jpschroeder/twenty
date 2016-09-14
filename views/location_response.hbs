@@ -2,6 +2,8 @@
 
 <p>Token: {{request.token}}</p>
 <p>Request Created: {{request.createdAt}}</p>
+<p><a href="#" id="uxsmslink">Send via SMS</a></p>
+<p><a href="#" id="uxemaillink">Send via Email</a></p>
 
 <form action="/location/response/{{request.token}}" method="post">
   <p>Latitude: <span id="uxlatitude"></span></p>
@@ -72,4 +74,10 @@ function message(txt) {
 }
 
 init();
+
+var el = document.getElementById('uxsmslink');
+el.href = "sms:?body=" + document.location.href;
+el = document.getElementById('uxemaillink');
+el.href = "mailto:?body=" + document.location.href;
+
 </script>

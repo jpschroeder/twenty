@@ -45,6 +45,7 @@ router.get('/response/:token', function(req, res, next) {
       response.googlemapslink = 'http://www.google.com/maps/place/' + latlng;
       response.googleimg = 'https://maps.googleapis.com/maps/api/staticmap?center=' + latlng;
       response.googleimg += '&markers=' + latlng + '&size=600x300';
+      response.googleimg += '&key=' + process.env.GOOGLEMAPS_KEY;
       return response;
     });
     var hasresponse = (responses.length > 0);
