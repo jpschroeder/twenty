@@ -1,4 +1,5 @@
 var uuid = require('node-uuid');
+var moment = require('moment');
 var express = require('express');
 var router = express.Router();
 
@@ -46,6 +47,9 @@ router.get('/response/:token', function(req, res, next) {
       response.googleimg = 'https://maps.googleapis.com/maps/api/staticmap?center=' + latlng;
       response.googleimg += '&markers=' + latlng + '&size=800x400';
       response.googleimg += '&key=' + process.env.GOOGLEMAPS_KEY;
+      response.createdAtString = moment(response.createdAt).fromNow();
+      response.latitudeRound = Math.round(response.latitude * 1000) / 1000;
+      response.longitudeRound = Math.round(response.longitude * 1000) / 1000;
       return response;
     });
     var hasresponse = (responses.length > 0);

@@ -63,8 +63,8 @@
       </div>
       <div class="card-action">
         <a href="#" id="uxlink">Direct Link</a>
-        <a href="#" id="uxsmslink">Send via SMS</a>
-        <a href="#" id="uxemaillink">Send via Email</a>
+        <a href="#" id="uxsmslink">Send SMS</a>
+        <a href="#" id="uxemaillink">Send Email</a>
       </div>
     </div>
   </div>
@@ -105,9 +105,9 @@
             {{#each responses}}
             <tr>
               <td><a href="{{googlemapslink}}" target="_blank">{{id}}</a></td>
-              <td>{{latitude}}</td>
-              <td>{{longitude}}</td>
-              <td>{{createdAt}}</td>
+              <td>{{latitudeRound}}</td>
+              <td>{{longitudeRound}}</td>
+              <td>{{createdAtString}}</td>
             </tr>
             {{/each}}
           </tbody>
