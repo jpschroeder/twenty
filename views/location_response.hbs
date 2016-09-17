@@ -1,49 +1,139 @@
-<h1>{{title}}</h1>
 
-<p>Token: {{request.token}}</p>
-<p>Request Created: {{request.createdAt}}</p>
-<p><a href="#" id="uxsmslink">Send via SMS</a></p>
-<p><a href="#" id="uxemaillink">Send via Email</a></p>
+<div class="row"></div>
 
-<form action="/location/response/{{request.token}}" method="post">
-  <p>Latitude: <span id="uxlatitude"></span></p>
-  <p>Longitude: <span id="uxlongitude"></span></p>
-  <p id="uxmessage"></p>
+<div class="row">
+  <div class="col s12 m8 push-m2">
 
-  <input type="hidden" name="latitude" id="hdlatitude"/>
-  <input type="hidden" name="longitude" id="hdlongitude"/>
-  <input type="submit" id="uxsubmit" disabled />
-</form>
+    <form action="/location/response/{{request.token}}" method="post">
+      <input type="hidden" name="latitude" id="hdlatitude"/>
+      <input type="hidden" name="longitude" id="hdlongitude"/>
+      <button class="btn-large waves-effect waves-light red" style="width: 100%" type="submit" name="action" id="uxsubmit">
+        Click here to share your location
+        <i class="material-icons right">send</i>
+      </button>
+    </form>
+
+  </div>
+</div>
+
+<div class="row" id="uxmessageholder" style="display: none;">
+  <div class="col s12 m8 push-m2">
+    <div class="card-panel yellow darken-1">
+      <span class="flow-text" id="uxmessage">
+      </span>
+    </div>
+  </div>
+</div>
 
 {{#if hasresponse}}
-<a href={{lastresponse.googlemapslink}} target="_blank">
-  <img src="{{lastresponse.googleimg}}"/>
-</a>
+<div class="row">
+  <div class="col s12 m8 push-m2">
+    <div class="card teal darken-3">
+      <div class="card-image">
+        <a href="{{lastresponse.googlemapslink}}" target="_blank">
+          <img src="{{lastresponse.googleimg}}">
+        </a>
+        <span class="card-title black-text">Last Response</span>
+      </div>
+      <div class="card-action">
+        <a href="{{lastresponse.googlemapslink}}" target="_blank">Open in Google Maps</a>
+      </div>
+    </div>
+  </div>
+</div>
+{{else}}
+<div class="row">
+  <div class="col s12 m8 push-m2">
+    <div class="card teal darken-3">
+      <div class="card-content">
+        <span class="flow-text white-text">There are no locations shared yet</span>
+      </div>
+    </div>
+  </div>
+</div>
 {{/if}}
 
-<h2>Responses</h2>
-<table>
-  <thead>
-    <tr>
-      <th>Id</th>
-      <th>Latitude</th>
-      <th>Longitude</th>
-      <th>Map</th>
-      <th>Response Created</th>
-    </tr>
-  </thead>
-  <tbody>
-    {{#each responses}}
-    <tr>
-      <td>{{id}}</td>
-      <td>{{latitude}}</td>
-      <td>{{longitude}}</td>
-      <td><a href="{{googlemapslink}}" target="_blank">map</a></td>
-      <td>{{createdAt}}</td>
-    </tr>
-    {{/each}}
-  </tbody>
-</table>
+<div class="row">
+  <div class="col s12 m8 push-m2">
+    <div class="card blue-grey darken-1">
+      <div class="card-content white-text">
+        <!--<span class="card-title">Card Title</span>-->
+        <p class="flow-text">Send this secure token to anyone you want to have access to your location</p>
+        <blockquote style="margin-bottom:0px;">{{request.token}}</blockquote>
+      </div>
+      <div class="card-action">
+        <a href="#" id="uxlink">Direct Link</a>
+        <a href="#" id="uxsmslink">Send via SMS</a>
+        <a href="#" id="uxemaillink">Send via Email</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col s12 m8 push-m2">
+    <div class="card cyan darken-2">
+      <div class="card-content white-text">
+        <span class="card-title">Your current location</span>
+        <p class="white-text">
+        Latitude: <span id="uxlatitude"></span>
+        <br/>
+        Longitude: <span id="uxlongitude"></span>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{#if hasresponse}}
+<div class="row">
+  <div class="col s12 m8 push-m2">
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">All Responses</span>
+        <p>
+        <table>
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Latitude</th>
+              <th>Longitude</th>
+              <th>Shared</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each responses}}
+            <tr>
+              <td><a href="{{googlemapslink}}" target="_blank">{{id}}</a></td>
+              <td>{{latitude}}</td>
+              <td>{{longitude}}</td>
+              <td>{{createdAt}}</td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+{{/if}}
+
+<div class="row">
+  <div class="col s12 m8 push-m2">
+    <div class="card green darken-2">
+      <div class="card-content white-text">
+        <span class="card-title">Token created</span>
+        <p class="white-text">
+        {{request.createdAt}}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 
 <script type="text/javascript">
 
@@ -55,8 +145,8 @@ function init() {
   //navigator.geolocation.getCurrentPosition(location_success, location_error);
   var geo_options = {
     enableHighAccuracy: true
-    //maximumAge        : 30000,
-    //timeout           : 27000
+      //maximumAge        : 30000,
+      //timeout           : 27000
   };
   var watchID = navigator.geolocation.watchPosition(location_success, location_error, geo_options);
 }
@@ -77,6 +167,8 @@ function location_error(err) {
 function message(txt) {
   var e = document.getElementById('uxmessage');
   e.innerText = txt;
+  e = document.getElementById('uxmessageholder');
+  e.style.display = 'block';
 }
 
 init();
@@ -85,5 +177,7 @@ var el = document.getElementById('uxsmslink');
 el.href = "sms:?body=" + document.location.href;
 el = document.getElementById('uxemaillink');
 el.href = "mailto:?body=" + document.location.href;
+el = document.getElementById('uxlink');
+el.href = document.location.href;
 
 </script>
