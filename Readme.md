@@ -6,7 +6,7 @@ This is a simple web application that allows you to share or request location in
 
 First copy `app/env.sample` to `app/.env` and add your own google api key and database url.
 
-Then run: `DEBUG=twenty:* npm start`
+Then run: `npm start`
 
 Then visit: `http://localhost:3000`
 
